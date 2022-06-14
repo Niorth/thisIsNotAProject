@@ -1,19 +1,31 @@
 import {IWrite} from "./IWrite";
 import {IRead} from "./IRead";
-import {pool} from "../../config/db"
+import {ClassroomSequelize} from "../../models/sequelizeModels/ClassroomSequelize";
+import {UserSequelize} from "../../models/sequelizeModels/UserSequelize";
 
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
 
     public readonly _collection: string;
-    private readonly findOneQuery = 'SELECT * FROM "$table_name" WHERE id = $1'
+    private readonly model: any
 
-    //we created constructor with arguments to manipulate mongodb operations
     constructor(collectionName: string) {
         this._collection = collectionName;
+        switch (collectionName) {
+            case "classroom":
+                this.model = ClassroomSequelize
+                break
+            case "user":
+                this.model = UserSequelize
+                break
+            default:
+                throw new Error("unknown collection name " + collectionName)
+        }
         this.findOne = this.findOne.bind(this)
     }
 
-    abstract create(item: T): Promise<boolean>
+    create(item: T): Promise<boolean> {
+        return this.model.create(item)
+    }
 
     update(id: string, item: T): Promise<boolean> {
         throw new Error("Method not implemented.");
@@ -24,18 +36,15 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
     }
 
     async findAll(): Promise<T[]> {
-        const result = await pool.query(
-            'SELECT * FROM ' + '"' + this._collection + '"'
-        )
-        return result.rows
+        return await this.model.findAll()
     }
 
     async findOne(id: string): Promise<T> {
-        const result = await pool.query(
-            this.findOneQuery.replace("$table_name", this._collection),
-            [id]
-        )
-        return result.rows[0]
+        return this.model.findAll({
+            where: {
+                id: id
+            }
+        });
     }
 
     find(item: T): Promise<T[]> {

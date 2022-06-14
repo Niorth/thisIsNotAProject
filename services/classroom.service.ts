@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
 import {ClassroomRepository} from "../repositories/classroom.repository";
-import {Classroom} from "../models/classroom";
+import {Classroom} from "../models/Classroom";
 
 const repository = new ClassroomRepository();
 

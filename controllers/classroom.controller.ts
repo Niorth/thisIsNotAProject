@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
-import {User} from "../models/user";
+import {User} from "../models/User";
 import {UserService} from "../services/user.service";
 import {ClassroomService} from "../services/classroom.service";
-import {Classroom} from "../models/classroom";
+import {Classroom} from "../models/Classroom";
 
 export class ClassroomController {
     public path = '/classroom';
