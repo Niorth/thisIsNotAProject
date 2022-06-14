@@ -17,6 +17,7 @@ export class UserController {
         this.router.get(this.path, this.getAllUsers.bind(this));
         this.router.get(this.path + "/:id", this.getUserById.bind(this));
         this.router.post(this.path, this.createUser.bind(this));
+        this.router.post(this.path + "/addUserToClassroom", this.addUserToClassroom.bind(this));
     }
 
     public async getAllUsers(req: Request, res: Response) {
@@ -47,6 +48,20 @@ export class UserController {
 
     public async createUser(req: Request, res: Response) {
         this.userService.newUser(req.body)
+            .then(() =>  {
+                res.status(200).json()
+            })
+            .catch((e: Error) => {
+                res.status(500).send({
+                    message: e
+                });
+                console.error(e)
+            })
+    }
+
+    public async addUserToClassroom(req: Request, res: Response) {
+        const body: {idUser: number, idClassroom: number} = req.body
+        this.userService.addUserToClassroom(body)
             .then(() =>  {
                 res.status(200).json()
             })

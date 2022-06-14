@@ -52,5 +52,12 @@ export class UserService {
         res.json({message: "DELETE 1 user"});
     };
 
+    async addUserToClassroom(body: { idUser: number; idClassroom: number }) {
+        try {
+            return await repository.addUserToClassroom(body.idUser, body.idClassroom)
+        } catch (e) {
+            throw e
+        }
+    }
 }
 
