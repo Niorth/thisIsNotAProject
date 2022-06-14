@@ -1,0 +1,72 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+    <changeSet id="001_create_user_table" author="Hugo Niort">
+        <createTable tableName="user">
+            <column autoIncrement="true" name="id" type="bigint" >
+                <constraints primaryKey="true" primaryKeyName="pk_user"/>
+            </column>
+            <column name="firstname" type="varchar" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="varchar" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="gender" type="varchar" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="isTeacher" type="boolean" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="isStudent" type="boolean" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002_create_classroom_table" author="Hugo Niort">
+        <createTable tableName="classroom">
+            <column autoIncrement="true" name="id" type="bigint" >
+                <constraints primaryKey="true" primaryKeyName="pk_classroom"/>
+            </column>
+            <column name="name" type="varchar" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003_create_user_classroom_association_table" author="Hugo Niort">
+        <createTable tableName="user_classroom">
+
+            <column name="idUser" type="bigint" >
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="idClassroom" type="bigint" >
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="isActive" type="boolean" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="004_add_foreign_key_constraint_user_classroom_association_table" author="Hugo Niort">
+        <addForeignKeyConstraint  baseColumnNames="idUser"
+                                  baseTableName="user_classroom"
+                                  baseTableSchemaName="public"
+                                  constraintName="fk_user_user_classroom"
+                                  deferrable="true"
+                                  initiallyDeferred="true"
+                                  onDelete="CASCADE"
+                                  onUpdate="RESTRICT"
+                                  referencedColumnNames="id"
+                                  referencedTableName="user"
+                                  referencedTableSchemaName="public"
+                                  validate="true"/>
+    </changeSet>
+
+
+</databaseChangeLog>
