@@ -28,10 +28,10 @@ UserClassroomSequelize.init({
     updatedAt: false,
 });
 
-UserClassroomSequelize.hasOne(UserSequelize, {
+UserClassroomSequelize.belongsTo(UserSequelize, {
     foreignKey: "idUser"
 })
 
-UserClassroomSequelize.hasOne(ClassroomSequelize, {
+UserClassroomSequelize.belongsTo(ClassroomSequelize, {
     foreignKey: "idClassroom"
 })

@@ -5,11 +5,9 @@ import {UserSequelize} from "../../models/sequelizeModels/UserSequelize";
 
 export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
 
-    public readonly _collection: string;
-    private readonly model: any
+    private model: any
 
     constructor(collectionName: string) {
-        this._collection = collectionName;
         switch (collectionName) {
             case "classroom":
                 this.model = ClassroomSequelize
@@ -21,18 +19,29 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
                 throw new Error("unknown collection name " + collectionName)
         }
         this.findOne = this.findOne.bind(this)
+        this.create = this.create.bind(this)
+        this.delete = this.delete.bind(this)
+        this.findAll = this.findAll.bind(this)
     }
 
-    create(item: T): Promise<boolean> {
+    async create(item: T): Promise<T> {
         return this.model.create(item)
     }
 
     update(id: string, item: T): Promise<boolean> {
-        throw new Error("Method not implemented.");
+        return this.model.update({...item, updatedAt: Date.now()}, {
+            where: {
+                id: id
+            }
+        });
 
     }
-    delete(id: string): Promise<boolean> {
-        throw new Error("Method not implemented.");
+    delete(id: string): Promise<number> {
+        return this.model.destroy({
+            where: {
+                id: id
+            }
+        })
     }
 
     async findAll(): Promise<T[]> {
@@ -45,9 +54,5 @@ export abstract class BaseRepository<T> implements IWrite<T>, IRead<T> {
                 id: id
             }
         });
-    }
-
-    find(item: T): Promise<T[]> {
-        throw new Error("Method not implemented.");
     }
 }

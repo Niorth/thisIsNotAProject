@@ -1,8 +1,7 @@
-import {Request, Response} from 'express';
+import {Request} from 'express';
 import {User} from "../models/User";
 import {UserRepository} from "../repositories/user.repository";
 
-const pool = require("../config/db")
 
 const repository = new UserRepository();
 
@@ -10,9 +9,7 @@ const repository = new UserRepository();
 export class UserService {
     async getAllUser(): Promise<User[]> {
         try {
-            const result = await repository.findAll()
-            const users: User[] = result
-            return users
+            return await repository.findAll()
         } catch (e) {
             throw e
         }
@@ -21,19 +18,12 @@ export class UserService {
 //POST '/user'
     async newUser(user: User) {
         try {
-            const result: boolean = await repository.create(user)
-            return result
+            return await repository.create(user)
         } catch (e) {
             throw e
         }
     };
 
-//DELETE '/user'
-    async deleteAllUser(req: Request, res: Response, id: string) {
-        res.json({message: "DELETE all user"});
-    };
-
-//GET '/user/:name'
     async getOneUser(id: string): Promise<User> {
         try {
             return await repository.findOne(id)
@@ -42,17 +32,23 @@ export class UserService {
         }
     };
 
-//POST '/user/:name'
-    newComment(req: Request, res: { json: (arg0: { message: string; }) => void; }, next: any) {
-        res.json({message: "POST 1 user comment"});
+    async deleteOneUser(id: string) {
+        try {
+            return await repository.delete(id)
+        } catch (e) {
+            throw e
+        }
     };
 
-//DELETE '/user/:name'
-    deleteOneUser(req: Request, res: { json: (arg0: { message: string; }) => void; }, next: any)  {
-        res.json({message: "DELETE 1 user"});
+    async updateUser(id: string, user: User) {
+        try {
+            return await repository.update(id, user)
+        } catch (e) {
+            throw e
+        }
     };
 
-    async addUserToClassroom(body: { idUser: number; idClassroom: number }) {
+    async addUserToClassroom(body: { idUser: bigint; idClassroom: bigint }) {
         try {
             return await repository.addUserToClassroom(body.idUser, body.idClassroom)
         } catch (e) {

@@ -1,9 +1,14 @@
-import {DataTypes, Model} from "sequelize";
+import {DataTypes, Model, Optional} from "sequelize";
 import {sequelize} from "../../config/sequelize";
+import {Classroom} from "../Classroom";
 
 export class ClassroomSequelize extends Model implements IClassroom {
-    declare id: number
+    declare id: bigint
     declare name: string;
+
+    constructor(...args: any) {
+        super(...args);
+    }
 }
 
 ClassroomSequelize.init({
@@ -20,5 +25,5 @@ ClassroomSequelize.init({
 }, {
     sequelize,
     modelName: 'Classroom',
-    tableName: 'classroom'
+    tableName: 'classroom',
 });

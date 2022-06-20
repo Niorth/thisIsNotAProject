@@ -1,5 +1,5 @@
 export class User implements IUser {
-    id: number
+    id: bigint
     firstname: string;
     gender: string;
     isStudent: boolean;
@@ -9,7 +9,7 @@ export class User implements IUser {
     updatedAt: Date
 
 
-    constructor(id: number, firstname: string, lastname: string, gender: string, isTeacher: boolean, isStudent: boolean, createdAt: Date, updatedAt: Date) {
+    constructor(id: bigint, firstname: string, lastname: string, gender: string, isTeacher: boolean, isStudent: boolean, createdAt: Date, updatedAt: Date) {
         this.id = id
         this.firstname = firstname
         this.lastname = lastname

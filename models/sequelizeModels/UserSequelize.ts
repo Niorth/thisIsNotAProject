@@ -2,7 +2,7 @@ import {DataTypes, Model} from "sequelize";
 import {sequelize} from "../../config/sequelize";
 
 export class UserSequelize extends Model implements IUser {
-    declare id: number
+    declare id: bigint
     declare firstname: string;
     declare gender: string;
     declare isStudent: boolean;
@@ -34,7 +34,7 @@ UserSequelize.init({
         type: DataTypes.BOOLEAN
     }
 }, {
-    sequelize, // We need to pass the connection instance
-    modelName: 'User', // We need to choose the model name
+    sequelize,
+    modelName: 'User',
     tableName: 'user',
 });

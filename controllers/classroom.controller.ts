@@ -19,6 +19,8 @@ export class ClassroomController {
         this.router.get(this.path, this.getAllClassroom.bind(this));
         this.router.get(this.path + "/:id", this.getClassroomById.bind(this));
         this.router.post(this.path, this.createClassroom.bind(this));
+        this.router.delete(this.path + "/:id", this.deleteOneClassroom.bind(this));
+        this.router.put(this.path, this.updateClassroom.bind(this));
     }
 
     public async getAllClassroom(req: Request, res: Response) {
@@ -47,8 +49,34 @@ export class ClassroomController {
             })
     }
 
+    public async deleteOneClassroom(req: Request, res: Response) {
+        this.classroomService.deleteOneClassroom(req.params.id)
+            .then((result: number) =>  {
+                res.status(200).json(result)
+            })
+            .catch((e: Error) => {
+                res.status(500).send({
+                    message: e
+                });
+                console.error(e)
+            })
+    }
+
     public async createClassroom(req: Request, res: Response) {
         this.classroomService.newClassroom(req.body)
+            .then(() =>  {
+                res.status(200).json()
+            })
+            .catch((e: Error) => {
+                res.status(500).send({
+                    message: e
+                });
+                console.error(e)
+            })
+    }
+
+    public async updateClassroom(req: Request, res: Response) {
+        this.classroomService.updateClassroom(req.body.id, req.body)
             .then(() =>  {
                 res.status(200).json()
             })

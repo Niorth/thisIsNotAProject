@@ -1,5 +1,5 @@
 interface IUser {
-    id: number
+    id: bigint
     firstname: string
     lastname: string
     gender: string

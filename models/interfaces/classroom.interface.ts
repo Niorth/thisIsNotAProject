@@ -1,4 +1,4 @@
 interface IClassroom {
-    id: number
+    id: bigint
     name: string
 }
