@@ -1,21 +1,37 @@
 export class User implements IUser {
-    id: bigint
+
+    id: number | null
     firstname: string;
     gender: string;
     isStudent: boolean;
     isTeacher: boolean;
     lastname: string;
-    createdAt: Date
-    updatedAt: Date
+    email: string;
+    birthday: Date;
+    createdAt: Date | null
+    updatedAt: Date | null
 
 
-    constructor(id: bigint, firstname: string, lastname: string, gender: string, isTeacher: boolean, isStudent: boolean, createdAt: Date, updatedAt: Date) {
-        this.id = id
+
+
+    constructor(firstname: string,
+                lastname: string,
+                gender: string,
+                isTeacher: boolean,
+                isStudent: boolean,
+                email: string,
+                birthday: Date,
+                createdAt: Date | null,
+                updatedAt: Date | null
+    ) {
+        this.id = null
         this.firstname = firstname
         this.lastname = lastname
         this.gender = gender
         this.isTeacher = isTeacher
         this.isStudent = isStudent
+        this.email = email
+        this.birthday = birthday
         this.createdAt = createdAt
         this.updatedAt = updatedAt
     }

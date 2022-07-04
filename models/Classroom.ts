@@ -1,11 +1,11 @@
 export class Classroom implements IClassroom {
-    id: bigint
+    id: number
     name: string
-    createdAt: Date
-    updatedAt: Date
+    createdAt: number
+    updatedAt: number
 
 
-    constructor(id: bigint, name: string, createdAt: Date, updatedAt: Date) {
+    constructor(id: number, name: string, createdAt: number, updatedAt: number) {
         this.id = id
         this.name = name
         this.createdAt = createdAt

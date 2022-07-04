@@ -15,7 +15,6 @@ export class UserService {
         }
     };
 
-//POST '/user'
     async newUser(user: User) {
         try {
             return await repository.create(user)
@@ -54,6 +53,17 @@ export class UserService {
         } catch (e) {
             throw e
         }
+    }
+
+    //TODO : Type = USER
+    findOneByEmail(email: string): Promise<any> {
+        return repository.findOneByEmail(email)
+            .then((res: IUser | null) => {
+                return res
+            })
+            .catch((err: Error) => {
+                throw err
+            })
     }
 }
 

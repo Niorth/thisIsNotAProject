@@ -3,7 +3,7 @@ import {sequelize} from "../../config/sequelize";
 import {Classroom} from "../Classroom";
 
 export class ClassroomSequelize extends Model implements IClassroom {
-    declare id: bigint
+    declare id: number
     declare name: string;
 
     constructor(...args: any) {

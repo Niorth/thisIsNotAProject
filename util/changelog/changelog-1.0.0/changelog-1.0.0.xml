@@ -24,6 +24,12 @@
             <column name="isStudent" type="boolean" >
                 <constraints nullable="false"/>
             </column>
+            <column name="birthday" type="date" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar" >
+                <constraints nullable="false" unique="true"/>
+            </column>
             <column name="createdAt" type="date" >
                 <constraints nullable="false" />
             </column>
@@ -78,6 +84,12 @@
                                   referencedTableName="user"
                                   referencedTableSchemaName="public"
                                   validate="true"/>
+    </changeSet>
+
+    <changeSet id="005_create_session_table" author="Hugo Niort">
+        <sqlFile
+                path="node_modules/connect-pg-simple/table.sql"
+        />
     </changeSet>
 
 
